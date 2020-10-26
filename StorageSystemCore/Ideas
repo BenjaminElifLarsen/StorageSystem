@@ -1,0 +1,25 @@
+1: Instead of returning strings for the view/SQL-add/update returns objects and for sql check their type, if string add '' around the value.
+	This does not fully work as a null string returns as an object rather than an object:string. Fixed by doing a type check on the property and value is null. 
+
+2: When adding a ware to the SQL-database, start with adding the default values (name, id, amount, type) and then for each extra value check if the column exist. 
+  2.1: If it does, just add the value that belongs to that column
+  2.2: If it does not, add the column as nullable and then add the value. 
+
+For the Converter and the function that is worked on right now. There is no reason to store the values in the dictionary. Just have a List<string> for the sqlnames and 
+a List<object> for the values. 
+
+Maybe it is better to keep them together as a dictionary and then loop through the wares and check if any of them contains a property
+with any of the selected attributes. 
+
+For the visual part, have a string[,] for the values, find all the properties with the correct attributes and write them in the correct entry.
+	If they do not have a specific attributes its entry should be "null.". Rows should be each specific ware. 
+	1: Find for each coloumn the longest value and use that value +2 for the '|' seperator.
+	
+To get wares from the database first gather the type of each entry and then find all of the sql attributes that belongs to that entry and use the sqlnames to select the data.
+	Either:
+		1: select the data for each attribute, one at a time or
+		2: select all of the data at ones 
+	Also, the basic constructor variables that all wares shares should be selected first in the correct order and the ware is initialsed with these and 		
+		then their properties that contains sql attributes are called and set. 
+		
+Use string builder rather than += when addding strings together. 
